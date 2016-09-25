@@ -1,18 +1,45 @@
 var
 	gameport = process.env.PORT || 4004,
-	//io = require('socket.io'),
+	io = require('socket.io'),
 	express = require('express'),
-	//UUID = require('node-uuid'),
-	//http = require('http'),
+	UUID = require('node-uuid'),
+	http = require('http'),
 	app = express(),
 	server = http.createServer(app);
 
-server.listen(gameport)
+server.listen(gameport);
+
+
 
 app.get('/', function(req,res){
-res.sendfile('/index.html',{root:__dirname});
+res.sendFile('/index.html',{root:__dirname});
 });
 
 app.get('/*', function(req,res,next){
-res.sendfile(__dirname + '/' + req.params[0]);
+res.sendFile(__dirname + '/' + req.params[0]);
+});
+
+var sio = io.listen(server);
+
+
+   sio.configure(function () {
+
+    sio.set('log level', 0);
+
+    sio.set('authorization', function (handshakeData, callback) {
+        callback(null, true); // error first callback style
+    });
+
+});
+
+
+//require('./game.logic.js');
+
+sio.sockets.on('connection', function(client){
+    client.userid = UUID();
+    client.emit('onconnected', {id:client.userid});
+    console.log('connected');
+    client.on('message', function(m){
+        console.log(Date.now()-parseFloat(m));
+    });
 });

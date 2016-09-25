@@ -5,11 +5,11 @@ var test =0;
 
 window.onload = function() {
 	var p_width = 400;
-	var p_height = 200
+	var p_height = 200;
 	var ball_radius = 5;
 
 	var start = {
-		speed : 2,
+		speed : 0.15,
 		radius : ball_radius,
 		self : {
 			x : -p_width / 2 + 8 * ball_radius,
@@ -48,8 +48,11 @@ document.onmouseup = function () {
 
 
 function onMouseUpdate(e) {
-    if (logic.players.self.mouseDown || logic.players.self.ball.arrow.active)
-	logic.players.self.inputs.push({mouse_down : logic.players.self.mouseDown, x : e.pageX, y : e.pageY});
+    if (logic.players.self.mouseDown || logic.players.self.ball.arrow.active){
+	input = {mouse_down : logic.players.self.mouseDown, x : e.pageX, y : e.pageY, time : Date.now()};
+	//logic.players.self.inputs.push({mouse_down : logic.players.self.mouseDown, x : e.pageX, y : e.pageY, time : Date.now()});
+	logic.apply_input(logic.players.self,input);
+	}
 }
 
 function draw(){
