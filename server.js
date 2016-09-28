@@ -135,3 +135,50 @@ server.create_game = function(player){
     
     return thegame;
 };
+
+    server.end_game = function(gameid, userid) {
+
+        var thegame = this.games[gameid];
+
+        if(thegame) {
+
+                //stop the game updates immediate
+            thegame.gamecore.stop_update();
+
+                //if the game has two players, the one is leaving
+            if(thegame.player_count > 1) {
+
+                    //send the players the message the game is ending
+                if(userid == thegame.player_host.userid) {
+
+                        //the host left, oh snap. Lets try join another game
+                    if(thegame.player_client) {
+                            //tell them the game is over
+                        thegame.player_client.send('s.e');
+                            //now look for/create a new game.
+                        this.findGame(thegame.player_client);
+                    }
+                    
+                } else {
+                        //the other player left, we were hosting
+                    if(thegame.player_host) {
+                            //tell the client the game is ended
+                        thegame.player_host.send('s.e');
+                            //i am no longer hosting, this game is going down
+                        thegame.player_host.hosting = false;
+                            //now look for/create a new game.
+                        this.findGame(thegame.player_host);
+                    }
+                }
+            }
+
+            delete this.games[gameid];
+            this.game_count--;
+
+            this.log('game removed. there are now ' + this.game_count + ' games' );
+
+        } else {
+            this.log('that game was not found!');
+        }
+
+    }; //game_server.endGame

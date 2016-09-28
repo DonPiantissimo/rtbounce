@@ -368,7 +368,11 @@ game_logic.prototype.physics_update = function () {
 
 game_logic.prototype.server_update = function(){
     this.constants.ball_speed = this.constants.speed;
-    setInterval(this.server_physics_update.bind(this),15);
+    this.intervalid = setInterval(this.server_physics_update.bind(this),15);
+};
+
+game_logic.prototype.stop_update = function(){
+  clearInterval(this.intervalid);  
 };
 
 game_logic.prototype._server_physics_update = function () {
