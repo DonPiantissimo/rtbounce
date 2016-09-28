@@ -33,13 +33,14 @@ var sio = io.listen(server);
 });
 
 
-//require('./game.logic.js');
+game_server = require('./server.js');
 
 sio.sockets.on('connection', function(client){
     client.userid = UUID();
     client.emit('onconnected', {id:client.userid});
     console.log('connected');
+    game_server.createGame(client);
     client.on('message', function(m){
-        console.log(Date.now()-parseFloat(m));
+        game_server.onMessage(client,m);
     });
 });

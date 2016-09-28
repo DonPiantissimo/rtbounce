@@ -9,7 +9,7 @@ window.onload = function() {
 	var ball_radius = 5;
 
 	var start = {
-		speed : 0.15,
+		speed : 0.1,
 		radius : ball_radius,
 		self : {
 			x : -p_width / 2 + 8 * ball_radius,
