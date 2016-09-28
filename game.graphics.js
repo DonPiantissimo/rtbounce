@@ -47,6 +47,7 @@ var game_graphics = function(start){
 		wall_depth : start.wall_depth,
 		wall_color : 0xFF4045
 		};
+                
 };
 
 
@@ -254,4 +255,33 @@ game_graphics.prototype.makeWalls = function() {
     horwall2.position.y = this.plane_constants.height / 2 - horwallheight * 4;
 
 
+};
+
+game_graphics.prototype.setObstacles=function(obstacles){
+    var quality = 1;
+    var depth = 10;
+    var obs = [];
+    var obstacleMaterial = 
+                        new THREE.MeshLambertMaterial(
+                    {
+                        color: 0xFF4045
+                    });
+    for (var i=0;i<obstacles.length;i++){
+        obs[i] = new THREE.Mesh(
+            new THREE.CubeGeometry(
+                    obstacles[i].width,
+                    obstacles[i].height,
+                    obstacles[i].depth,
+                    quality,
+                    quality,
+                    quality),
+            obstacleMaterial);
+            
+            obs[i].receiveShadow = true;
+            obs[i].castShadow = true;
+            
+            obs[i].position.x = obstacles[i].pos.x;
+            obs[i].position.y = obstacles[i].pos.y;
+            obs[i].position.z = depth;
+    }
 };

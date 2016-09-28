@@ -29,13 +29,62 @@ window.onload = function() {
 	logic = new game_logic(start);
 	graphics = new game_graphics(start);
 	graphics.create_scene();	
+        //graphics.setObstacles(start.obstacles);
 	draw();
 
 	
 };
-
-
-
+/*
+function makeObstacles(){
+    var obstacleWidth =40, fieldWidth = 400,fieldHeight=200,     obstacleHeight = 10,
+    obstacleDepth = 10;
+    
+    var obstacle = [
+        {pos:{x:-7 * fieldWidth / 16 + obstacleWidth,y:1 * fieldHeight / 4} },
+        {pos:{x:-7 * fieldWidth / 16 + obstacleWidth,y:-1 * fieldHeight / 4} },
+        {pos:{x:-7 * fieldWidth / 16 + obstacleWidth,y:0} },
+        {pos:{x:-4 * fieldWidth / 16 + obstacleWidth,y:0.5 * fieldHeight / 4} },
+        {pos:{x:-4 * fieldWidth / 16 + obstacleWidth,y:-0.5* fieldHeight / 4} },
+        {pos:{x:-4 * fieldWidth / 16 + obstacleWidth,y:1.5* fieldHeight / 4} },
+        {pos:{x:-4 * fieldWidth / 16 + obstacleWidth,y:-1.5* fieldHeight / 4} },
+        {pos:{x:-1 * fieldWidth / 16 + obstacleWidth,y:1* fieldHeight / 4} },
+        {pos:{x:-1 * fieldWidth / 16 + obstacleWidth,y:-1* fieldHeight / 4} },
+        {pos:{x:3 * fieldWidth / 16 + obstacleWidth,y:0.4* fieldHeight / 4} },
+        {pos:{x:3 * fieldWidth / 16 + obstacleWidth,y:-0.4* fieldHeight / 4} },
+        {pos:{x:3 * fieldWidth / 16 + 2*obstacleWidth,y:-0.4* fieldHeight / 4} },
+        {pos:{x:3 * fieldWidth / 16 + 2*obstacleWidth,y:-0.4* fieldHeight / 4} },
+        {pos:{x:-1 * fieldWidth / 16 + obstacleWidth,y:0} },
+        
+        {pos:{x:-1 * fieldWidth / 16 + 0.5 * (obstacleWidth + obstacleHeight),y:fieldHeight / 4 + 0.5 * (obstacleWidth + obstacleHeight)} },
+        {pos:{x:-1 * fieldWidth / 16 + 0.5 * (obstacleWidth + obstacleHeight),y:-fieldHeight / 4 - 0.5 * (obstacleWidth + obstacleHeight)} },
+        {pos:{x:3 * fieldWidth / 16 + 0.5 * (obstacleWidth + obstacleHeight),y:0.4 * fieldHeight / 4 + 0.8 * (obstacleWidth + obstacleHeight)} },
+        {pos:{x:3 * fieldWidth / 16 + 0.5 * (obstacleWidth + obstacleHeight),y:-0.4 * fieldHeight / 4 - 0.8 * (obstacleWidth + obstacleHeight)} }
+        
+    ];
+        for (var i=0;i<14;i++){
+            obstacle[i].width = obstacleWidth;
+            obstacle[i].height = obstacleHeight;
+            obstacle[i].depth = obstacleDepth;
+            
+        }
+        for (var i=14;i<18;i++){
+            obstacle[i].width = obstacleHeight;
+            obstacle[i].height = 1.4*obstacleWidth;
+            obstacle[i].depth = obstacleDepth;
+        }
+        
+        for (var i=0;i<18;i++){
+            obstacle[i].ver_min = obstacle[i].bottom = obstacle[i].pos.y - obstacle[i].height/2;
+            obstacle[i].ver_max = obstacle[i].top = obstacle[i].pos.y + obstacle[i].height/2;
+            obstacle[i].hor_max = obstacle[i].right = obstacle[i].pos.x + obstacle[i].width/2;
+            obstacle[i].hor_min = obstacle[i].left = obstacle[i].pos.x - obstacle[i].width/2;
+            
+            
+        }
+        return obstacle;
+    
+};
+*/
 document.addEventListener('mousemove', onMouseUpdate, false);
 document.addEventListener('mouseenter', onMouseUpdate, false);
 
