@@ -39,7 +39,7 @@ sio.sockets.on('connection', function(client){
     client.userid = UUID();
     client.emit('onconnected', {id:client.userid});
     console.log('connected');
-    game_server.createGame(client);
+    game_server.find_game(client);
     client.on('message', function(m){
         game_server.onMessage(client,m);
     });

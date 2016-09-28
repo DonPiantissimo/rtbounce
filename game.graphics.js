@@ -10,6 +10,14 @@ var game_graphics = function(start){
 			rotation : start.self.rotation,
 			color : 0xD43001
 			},
+                other : {
+			pos : {
+				x: start.self.x,
+				y: start.self.y
+				},
+			rotation : start.self.rotation,
+			color : 0xD43001
+			},
 		segments : 6,
 		rings : 6
 		};
@@ -106,6 +114,27 @@ game_graphics.prototype.create_scene = function() {
     	this.ball.self.position.z = this.ball_values.radius;
     	this.ball.self.rotation.z = this.ball_values.self.rotation;
 
+	var otherSphereMaterial =
+        new THREE.MeshLambertMaterial(
+                 {
+                     color: this.ball_values.other.color
+                 });
+	
+	this.ball.other = new THREE.Mesh(
+            new THREE.SphereGeometry(
+                    this.ball_values.radius,
+                    this.ball_values.segments,
+                    this.ball_values.rings),
+            otherSphereMaterial);
+
+	this.scene.add(this.ball.other);
+
+    	this.ball.other.position.x = this.ball_values.other.pos.x;
+    	this.ball.other.position.y = this.ball_values.other.pos.y;
+    	// set ball above the table surface
+    	this.ball.other.position.z = this.ball_values.radius;
+    	this.ball.other.rotation.z = this.ball_values.other.rotation;
+
     	var pointLight =
             	new THREE.PointLight(0xF8D898);
 
@@ -121,6 +150,13 @@ game_graphics.prototype.create_scene = function() {
 	this.makeWalls();
 };
 
+game_graphics.prototype.update_ball_color = function(own, colour){
+    if (own)
+        this.ball.self.material.color.setHex(colour);
+    else
+        this.ball.other.material.color.setHex(colour);
+};
+
 game_graphics.prototype.theCamera = function() {
     this.camera.position.x = this.ball.self.position.x - 100;
     this.camera.position.y += (this.ball.self.position.y - this.camera.position.y) * 0.05;
@@ -133,10 +169,15 @@ game_graphics.prototype.theCamera = function() {
     this.camera.rotation.z = -90 * Math.PI / 180;
 };
 
-game_graphics.prototype.ballUpdate = function(physBall) {
-	this.ball.self.position.x = physBall.pos.x;
-	this.ball.self.position.y = physBall.pos.y;
-	this.ball.self.rotation.z = physBall.angle;
+game_graphics.prototype.ballUpdate = function(selfBall, otherBall) {
+	this.ball.self.position.x = selfBall.pos.x;
+	this.ball.self.position.y = selfBall.pos.y;
+	this.ball.self.rotation.z = selfBall.angle;
+        
+        this.ball.other.position.x = otherBall.pos.x;
+	this.ball.other.position.y = otherBall.pos.y;
+	this.ball.other.rotation.z = otherBall.angle;
+        
 };
 
 game_graphics.prototype.makeWalls = function() {

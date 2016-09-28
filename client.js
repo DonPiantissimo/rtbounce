@@ -60,8 +60,16 @@ function draw(){
 //		document.getElementById("scores").innerHTML = logic.players.self.inputs[logic.players.self.inputs.length-1].x + "-" + logic.players.self.inputs.length;
 
 	logic.physics_update(logic.players.self);
+        if (logic.players.self.ball.color_updated){
+            graphics.update_ball_color(true, logic.players.self.ball.color);
+            logic.players.self.ball.color_updated = false;
+        }
+        if (logic.players.other.ball.color_updated) {
+            graphics.update_ball_color(false, logic.players.other.ball.color);
+            logic.players.other.ball.color_updated = false;
+        }
         graphics.renderer.render(graphics.scene, graphics.camera);
-	graphics.ballUpdate(logic.players.self.ball);
+	graphics.ballUpdate(logic.players.self.ball, logic.players.other.ball);
 	graphics.theCamera();
 	requestAnimationFrame(draw);
 };
